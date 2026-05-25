@@ -1,0 +1,28 @@
+# Build output
+/build/
+/out/
+/cmake-build-*/
+_deps/
+
+# Compiled objects / binaries
+*.o
+*.obj
+*.a
+*.lib
+*.exe
+*.dll
+*.pdb
+
+# Editor / IDE
+/.vscode/
+/.idea/
+*.swp
+*~
+
+# OS cruft
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Claude Code local state (not part of the project)
+.claude/
