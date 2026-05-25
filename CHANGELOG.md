@@ -15,4 +15,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Formatting utilities: human-readable byte sizes and thousands separators.
 - CLI `--print` text mode showing the largest entries under a path.
 
-[Unreleased]: https://github.com/ryanzander99/fstat/commits/main
+[Unreleased]: https://github.com/ryannzander/fstat/commits/main

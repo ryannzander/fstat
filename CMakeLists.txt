@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.20)
 project(fstat
     VERSION 0.1.0
     DESCRIPTION "A fast, interactive disk-usage analyzer for the terminal"
-    HOMEPAGE_URL "https://github.com/ryanzander99/fstat"
+    HOMEPAGE_URL "https://github.com/ryannzander/fstat"
     LANGUAGES CXX)
 
 # ---------------------------------------------------------------------------
