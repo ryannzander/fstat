@@ -39,6 +39,25 @@ else()
 endif()
 
 # ---------------------------------------------------------------------------
+# Third-party dependencies
+# ---------------------------------------------------------------------------
+include(FetchContent)
+
+# FTXUI: a modern C++ terminal UI library, used for the interactive browser.
+# Pulled at configure time; the include dirs are marked SYSTEM so its headers
+# don't trip our strict warning flags.
+FetchContent_Declare(ftxui
+    GIT_REPOSITORY https://github.com/ArthurSonzogni/FTXUI.git
+    GIT_TAG        v5.0.0
+    GIT_SHALLOW    TRUE
+    SYSTEM
+)
+set(FTXUI_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+set(FTXUI_BUILD_DOCS     OFF CACHE BOOL "" FORCE)
+set(FTXUI_BUILD_TESTS    OFF CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(ftxui)
+
+# ---------------------------------------------------------------------------
 # Subdirectories
 # ---------------------------------------------------------------------------
 add_subdirectory(src)

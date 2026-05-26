@@ -20,9 +20,10 @@ the biggest folders, and delete junk without leaving the terminal.
  ↑/↓ move   →/Enter open   ←/Backspace up   s sort   d delete   q quit
 ```
 
-> **Status:** early development (v0.1). The scanning core and a `--print`
-> text mode work today; the interactive TUI is being built next. See
-> [docs/DEVLOG.md](docs/DEVLOG.md) for the running history.
+> **Status:** early development (v0.1). The scanning core, the interactive
+> TUI, and a `--print` text mode all work today. Deleting from within the UI
+> and live scan progress are next. See [docs/DEVLOG.md](docs/DEVLOG.md) for the
+> running history.
 
 ## Features
 
@@ -30,7 +31,8 @@ the biggest folders, and delete junk without leaving the terminal.
   never aborts the whole scan).
 - Human-readable sizes (KiB / MiB / GiB …) and item counts.
 - `--print` mode for scripting: dump the largest entries as plain text.
-- Interactive TUI for navigating the tree _(in progress)_.
+- Interactive TUI: drill into the tree, proportional size bars and
+  percentages, sort by size or name, arrow-key or vim-style movement.
 
 ## Building
 
@@ -49,11 +51,22 @@ See [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) for a full setup guide.
 ## Usage
 
 ```sh
-fstat                 # analyze the current directory
+fstat                 # analyze the current directory (interactive TUI)
 fstat C:\Users\rybot  # analyze a specific directory
-fstat --print -n 30   # print the 30 largest entries and exit
+fstat --print -n 30   # print the 30 largest entries and exit (no TUI)
 fstat --help          # full option list
 ```
+
+### Key bindings (TUI)
+
+| Key                     | Action                          |
+|-------------------------|---------------------------------|
+| `↑` / `↓` (or `k` / `j`)| Move the selection              |
+| `Enter` / `→` (or `l`)  | Open the selected directory     |
+| `Backspace` / `←` (`h`) | Go up to the parent directory   |
+| `g` / `G`               | Jump to top / bottom            |
+| `s`                     | Toggle sort: size ↔ name        |
+| `q` / `Esc`             | Quit                            |
 
 ## Project layout
 

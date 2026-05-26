@@ -6,6 +6,41 @@ changelog. Newest entries at the top.
 
 ---
 
+## 2026-05-25 — Interactive TUI (milestone 2)
+
+The `--print` core proved the scanner end-to-end, so this milestone added the
+interactive browser in `src/ui/app.cpp`.
+
+**Decisions made:**
+
+- **FTXUI for the TUI**, pulled via CMake `FetchContent` (pinned to `v5.0.0`,
+  `GIT_SHALLOW`, `SYSTEM` so its headers don't trip our `-Wconversion`/
+  `-Wpedantic` flags). It builds cleanly under MinGW GCC 13.2 — the executable
+  links the static `ftxui-component`/`-dom`/`-screen` libs, so there are no new
+  runtime DLLs.
+- **The core stays UI-free.** `ftxui` links only into the executable, not into
+  `fstat_core`; the architecture rule (core has no UI deps) still holds.
+- **Rendering approach.** Each child renders as `size | percent | gauge | name`.
+  The selected row is `inverted | focus` inside a `frame`, which lets FTXUI
+  auto-scroll the selection into view without us tracking a scroll window.
+  Bars are colored by fraction-of-parent (green/yellow/red) as a heat hint.
+- **Navigation state** is just a `current` node pointer plus an `index_stack`
+  of per-level selections, so going up restores where you were.
+- **Name clash gotcha:** FTXUI defines `ftxui::Node`, which collides with our
+  `fstat::Node`. Resolved by keeping `using namespace ftxui;` *inside* `run()`
+  only and referring to our type via a `FsNode` alias / `fstat::Node` — never a
+  bare `Node` in that scope.
+
+**Testing note.** The TUI needs a real terminal, so it can't be exercised in
+the headless build harness; verified the binary builds, links, and loads, and
+that `--print`/`--help`/`--version` still behave. Manual TUI testing is on the
+user's terminal.
+
+**Milestone status:** 1–4 done (scaffolding, core, text mode, TUI). Next:
+in-UI delete with confirmation, and live progress during the scan.
+
+---
+
 ## 2026-05-25 — Project kickoff (v0.1)
 
 **Goal.** Build `fstat`, a disk-usage analyzer for the terminal, in modern C++,

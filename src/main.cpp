@@ -5,6 +5,7 @@
 #include <string>
 
 #include "core/scanner.hpp"
+#include "ui/app.hpp"
 #include "util/format.hpp"
 
 namespace {
@@ -27,9 +28,8 @@ void print_usage(std::ostream& os) {
 struct Options {
     std::string path = ".";
     std::size_t top = 20;
-    // v0.1 only has the text report; the interactive TUI lands in the next
-    // milestone and will become the default when no --print is given.
-    bool print_mode = true;
+    // The interactive TUI is the default; --print opts into the text report.
+    bool print_mode = false;
 };
 
 // Render the top-N largest direct children of `root` to stdout.
@@ -102,7 +102,14 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    root->sort_by_size();
-    print_report(*root, scanner.progress(), opt.top);
-    return 0;
+    if (opt.print_mode) {
+        root->sort_by_size();
+        print_report(*root, scanner.progress(), opt.top);
+        return 0;
+    }
+
+    // Interactive mode: pre-sort the whole tree by size so every level opens
+    // largest-first, then hand the tree to the TUI.
+    root->sort_by_size(/*deep=*/true);
+    return fstat::ui::run(std::move(root));
 }
